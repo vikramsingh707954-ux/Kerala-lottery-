@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Official Kerala Lottery Online Booking Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-emerald: #00a859;
+            --dark-emerald: #008744;
+            --accent-crimson: #e91e63;
+            --focus-blue: #2b6cb0;
+            --canvas-bg: #f8fafc;
+            --slate-gray: #4a5568;
+            --light-border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--canvas-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 16px;
+            color: #2d3748;
+        }
+
+        .phone-mockup-container {
+            background: #ffffff;
+            max-width: 450px;
+            width: 100%;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1), 0 10px 20px -6px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        /* Hero Banner Image Slot with Failover Aspect Ratio */
+        .banner-viewport {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 7.2;
+            background: #111827;
+            overflow: hidden;
+        }
+
+        .banner-viewport img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Dynamic Popup Overlay */
+        .live-alert-toast {
+            position: absolute;
+            bottom: 12px;
+            left: 16px;
+            right: 16px;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-left: 4px solid var(--primary-emerald);
+            padding: 12px 16px;
+            border-radius: 14px;
+            font-size: 13px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transform: translateY(0);
+            opacity: 1;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
+        }
+
+        .toast-icon-wrapper {
+            background: #e8f5e9;
+            color: var(--primary-emerald);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        /* Verification Indicator Bar */
+        .badge-assurance-strip {
+            background: #f1f5f9;
+            border-bottom: 1px solid var(--light-border);
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--slate-gray);
+        }
+
+        .live-pulse-container {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--primary-emerald);
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary-emerald);
+            border-radius: 50%;
+            animation: radialGlow 1.8s infinite ease-in-out;
+        }
+
+        @keyframes radialGlow {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.8); opacity: 0.5; }
+        }
+
+        /* Form Layout Elements */
+        .form-workspace {
+            padding: 20px;
+        }
+
+        .input-block {
+            margin-bottom: 16px;
+        }
+
+        .input-block label {
+            display: block;
+            font-size: 12px;
+            color: #718096;
+            font-weight: 700;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .interactive-input-shell {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .interactive-input-shell i {
+            position: absolute;
+            left: 16px;
+            color: #a0aec0;
+            font-size: 15px;
+            pointer-events: none;
+        }
+
+        .interactive-input-shell input {
+            width: 100%;
+            padding: 13px 16px 13px 44px;
+            border: 1.5px solid #cbd5e0;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            outline: none;
+            color: #1a202c;
+            transition: all 0.2s ease;
+        }
+
+        .interactive-input-shell input:focus {
+            border-color: var(--focus-blue);
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.15);
+        }
+
+        /* Custom Content Scroll Area */
+        .ticket-inventory-container {
+            border: 1.5px dashed #f48fb1;
+            border-radius: 16px;
+            padding: 16px;
+            background: #fffdfd;
+            margin-bottom: 20px;
+        }
+
+        .inventory-legend {
+            color: #c2185b;
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ticket-scroll-grid {
+            max-height: 240px;
+            overflow-y: auto;
+            border: 1px solid var(--light-border);
+            border-radius: 12px;
+            background: #ffffff;
+        }
+
+        .ticket-row-node {
+            padding: 12px 18px;
+            border-bottom: 1px solid #f1f5f9;
+            cursor: pointer;
+            font-weight: 700;
+            color: var(--slate-gray);
+            font-size: 14.5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.15s ease;
+        }
+
+        .ticket-row-node:last-child {
+            border-bottom: none;
+        }
+
+        .ticket-row-node:hover {
+            background: #f8fafc;
+        }
+
+        .ticket-row-node.selected {
+            background-color: #ebf8ff;
+            color: var(--focus-blue);
+        }
+
+        .ticket-row-node .checkbox-ui {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #cbd5e0;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: transparent;
+            transition: all 0.15s ease;
+        }
+
+        .ticket-row-node.selected .checkbox-ui {
+            border-color: var(--focus-blue);
+            background: var(--focus-blue);
+            color: #ffffff;
+        }
+
+        /* Statement Balance Bar */
+        .summary-billboard {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 14px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border: 1px solid var(--light-border);
+        }
+
+        .billboard-text {
+            font-size: 14px;
+            color: #718096;
+            font-weight: 600;
+        }
+
+        .billboard-total-value {
+            font-size: 20px;
+            font-weight: 800;
+            color: #1a202c;
+        }
+
+        /* Primary Action Dispatcher */
+        .action-button-trigger {
+            width: 100%;
+            background: var(--primary-emerald);
+            color: #ffffff;
+            border: none;
+            padding: 16px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 14px rgba(0, 168, 89, 0.25);
+            transition: all 0.2s ease;
+        }
+
+        .action-button-trigger:hover {
+            background: var(--dark-emerald);
+            box-shadow: 0 6px 20px rgba(0, 168, 89, 0.35);
+        }
+    </style>
+</head>
+<body>
+
+<div class="phone-mockup-container">
+    <div class="banner-viewport">
+        <img id="mainBannerImg" src="1000016014.png" onerror="applyBackupAsset()" alt="Kerala State Lottery Portal">
+        
+        <div class="live-alert-toast" id="liveToastNotification">
+            <div class="toast-icon-wrapper"><i class="fa-solid fa-ticket"></i></div>
+            <div>
+                <span id="popupClientName" style="font-weight:700; color:#1a202c;">Ramesh</span> 
+                <span style="color:#718096;">from</span> 
+                <strong id="popupClientLoc" style="color:#1a202c;">Bangalore</strong><br>
+                <span style="color:#4a5568;">Booked <strong id="popupTicketQty">10</strong> Tickets • <span style="color:var(--primary-emerald); font-weight:700;">₹<span id="popupPriceCalculated">400</span> Paid</span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="badge-assurance-strip">
+        <span><i class="fa-solid fa-shield-halved" style="color:#3182ce; margin-right:4px;"></i> Official Online Counter</span>
+        <div class="live-pulse-container">
+            <div class="pulse-dot"></div>
+            <span>Live Terminal Online</span>
+        </div>
+    </div>
+
+    <div class="form-workspace">
+        <div class="input-block">
+            <label>Full Name</label>
+            <div class="interactive-input-shell">
+                <i class="fa-solid fa-user"></i>
+                <input type="text" id="buyerName" placeholder="Enter your full name">
+            </div>
+        </div>
+
+        <div class="input-block">
+            <label>WhatsApp Number</label>
+            <div class="interactive-input-shell">
+                <i class="fa-solid fa-phone"></i>
+                <input type="tel" id="buyerContact" placeholder="Enter mobile number">
+            </div>
+        </div>
+
+        <div class="ticket-inventory-container">
+            <div class="inventory-legend">
+                <span><i class="fa-solid fa-receipt"></i> Select Tickets</span>
+                <span style="font-size:12px; background:#fce4ec; padding:2px 10px; border-radius:12px;">₹40 Per Unit</span>
+            </div>
+            
+            <div class="ticket-scroll-grid">
+                <div class="ticket-row-node" onclick="toggleSelection(this, 'KL074252')"><span>KL074252</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL949345')"><span>★KL949345</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL716637')"><span>★KL716637</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL332233')"><span>★KL332233</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL912802')"><span>★KL912802</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL675249')"><span>★KL675249</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL817262')"><span>★KL817262</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL479530')"><span>★KL479530</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL944274')"><span>★KL944274</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL618322')"><span>★KL618322</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL454126')"><span>★KL454126</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL627837')"><span>★KL627837</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL161202')"><span>★KL161202</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL526324')"><span>★KL526324</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL614273')"><span>★KL614273</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL267082')"><span>★KL267082</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL222211')"><span>★KL222211</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL779849')"><span>★KL779849</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL534444')"><span>★KL534444</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL733394')"><span>★KL733394</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL519242')"><span>★KL519242</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL830991')"><span>★KL830991</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL932334')"><span>★KL932334</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL357599')"><span>★KL357599</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL866248')"><span>★KL866248</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL539300')"><span>★KL539300</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL561230')"><span>★KL561230</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL253652')"><span>★KL253652</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL762521')"><span>★KL762521</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL405610')"><span>★KL405610</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL510248')"><span>★KL510248</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL032315')"><span>★KL032315</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL499441')"><span>★KL499441</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL010365')"><span>★KL010365</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL882991')"><span>★KL882991</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL146704')"><span>★KL146704</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL379249')"><span>★KL379249</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL855732')"><span>★KL855732</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL799438')"><span>★KL799438</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL097325')"><span>★KL097325</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL282904')"><span>★KL282904</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL042330')"><span>★KL042330</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL851045')"><span>★KL851045</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL370131')"><span>★KL370131</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL096330')"><span>★KL096330</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL444582')"><span>★KL444582</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL872625')"><span>★KL872625</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL975221')"><span>★KL975221</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL573448')"><span>★KL573448</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL847739')"><span>★KL847739</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL974362')"><span>★KL974362</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL226698')"><span>★KL226698</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL772989')"><span>★KL772989</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL882847')"><span>★KL882847</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL702524')"><span>★KL702524</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL261028')"><span>★KL261028</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL828529')"><span>★KL828529</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL374445')"><span>★KL374445</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL268432')"><span>★KL268432</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL815314')"><span>★KL815314</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL710348')"><span>★KL710348</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL313326')"><span>★KL313326</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL774267')"><span>★KL774267</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL234837')"><span>★KL234837</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL201359')"><span>★KL201359</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL014237')"><span>★KL014237</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL205362')"><span>★KL205362</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL304249')"><span>★KL304249</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL173379')"><span>★KL173379</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL932381')"><span>★KL932381</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL930420')"><span>★KL930420</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL986270')"><span>★KL986270</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL415254')"><span>★KL415254</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL872348')"><span>★KL872348</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL278289')"><span>★KL278289</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL619404')"><span>★KL619404</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL951528')"><span>★KL951528</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL541200')"><span>★KL541200</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL949295')"><span>★KL949295</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL528281')"><span>★KL528281</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL174546')"><span>★KL174546</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL697242')"><span>★KL697242</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL336358')"><span>★KL336358</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL694320')"><span>★KL694320</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL951546')"><span>★KL951546</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL058416')"><span>★KL058416</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL951538')"><span>★KL951538</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL605340')"><span>★KL605340</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL256303')"><span>★KL256303</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL673220')"><span>★KL673220</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL065265')"><span>★KL065265</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL097279')"><span>★KL097279</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL501462')"><span>★KL501462</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL529963')"><span>★KL529963</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL544630')"><span>★KL544630</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL000332')"><span>★KL000332</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL243434')"><span>★KL243434</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL115528')"><span>★KL115528</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL469924')"><span>★KL469924</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL659026')"><span>★KL659026</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL221421')"><span>★KL221421</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL786923')"><span>★KL786923</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL792622')"><span>★KL792622</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL542621')"><span>★KL542621</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL662541')"><span>★KL662541</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL082741')"><span>★KL082741</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL812546')"><span>★KL812546</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL863360')"><span>★KL863360</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL843120')"><span>★KL843120</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL554420')"><span>★KL554420</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL063445')"><span>★KL063445</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL353549')"><span>★KL353549</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL782656')"><span>★KL782656</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL465321')"><span>★KL465321</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL454521')"><span>★KL454521</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL716341')"><span>★KL716341</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL700207')"><span>★KL700207</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL169336')"><span>★KL169336</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL462322')"><span>★KL462322</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL055406')"><span>★KL055406</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL526320')"><span>★KL526320</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL725241')"><span>★KL725241</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL071234')"><span>★KL071234</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL816328')"><span>★KL816328</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL122054')"><span>★KL122054</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL276281')"><span>★KL276281</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL971447')"><span>★KL971447</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL239449')"><span>★KL239449</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL441204')"><span>★KL441204</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL464444')"><span>★KL464444</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL845295')"><span>★KL845295</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL010410')"><span>★KL010410</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL064555')"><span>★KL064555</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL789625')"><span>★KL789625</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL324441')"><span>★KL324441</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+                <div class="ticket-row-node" onclick="toggleSelection(this, '★KL871020')"><span>★KL871020</span><div class="checkbox-ui"><i class="fa-solid fa-check"></i></div></div>
+            </div>
+        </div>
+
+        <div class="summary-billboard">
+            <span class="billboard-text">Total Amount</span>
+            <span class="billboard-total-value">₹<span id="runningTotal">0</span></span>
+        </div>
+
+        <button class="action-button-trigger" onclick="processOrder()">
+            <i class="fa-brands fa-whatsapp" style="font-size:18px;"></i> Submit & Continue To WhatsApp
+        </button>
+    </div>
+</div>
+
+<script>
+    let activeTicketsCollection = [];
+    const itemCostUnit = 40;
+
+    // Failover Routine Execution for Image Error
+    function applyBackupAsset() {
+        const imageElement = document.getElementById('mainBannerImg');
+        // If main image fails to load, gracefully load the backup layout file
+        imageElement.src = '1000015921.jpg';
+    }
+
+    // Interactive Notification Deck
+    const simulatorPool = [
+        { alias: "Rahul", city: "Palakkad", volume: 5 },
+        { alias: "Anjali", city: "Kochi", volume: 12 },
+        { alias: "Vikram", city: "Trivandrum", volume: 8 },
+        { alias: "Suresh", city: "Kozhikode", volume: 15 },
+        { alias: "Priya", city: "Ernakulam", volume: 4 },
+        { alias: "Ramesh", city: "Bangalore", volume: 10 }
+    ];
+    let simulatorPointer = 0;
+
+    setInterval(() => {
+        const elementToast = document.getElementById('liveToastNotification');
+        elementToast.style.transform = 'translateY(12px)';
+        elementToast.style.opacity = '0';
+        
+        setTimeout(() => {
+            const dataNode = simulatorPool[simulatorPointer];
+            document.getElementById('popupClientName').innerText = dataNode.alias;
+            document.getElementById('popupClientLoc').innerText = dataNode.city;
+            document.getElementById('popupTicketQty').innerText = dataNode.volume;
+            document.getElementById('popupPriceCalculated').innerText = dataNode.volume * itemCostUnit;
+            
+            elementToast.style.transform = 'translateY(0)';
+            elementToast.style.opacity = '1';
+            simulatorPointer = (simulatorPointer + 1) % simulatorPool.length;
+        }, 4000);
+    }, 5000);
+
+    function toggleSelection(domReference, ticketUid) {
+        if (domReference.classList.contains('selected')) {
+            domReference.classList.remove('selected');
+            activeTicketsCollection = activeTicketsCollection.filter(id => id !== ticketUid);
+        } else {
+            domReference.classList.add('selected');
+            activeTicketsCollection.push(ticketUid);
+        }
+        document.getElementById('runningTotal').innerText = activeTicketsCollection.length * itemCostUnit;
+    }
+
+    function processOrder() {
+        const clientProfileName = document.getElementById('buyerName').value.trim();
+        const clientProfilePhone = document.getElementById('buyerContact').value.trim();
+        const calculationAggregate = activeTicketsCollection.length * itemCostUnit;
+
+        if (!clientProfileName || !clientProfilePhone) {
+            alert("कृपया अपना नाम और व्हाट्सएप नंबर दर्ज करें।");
+            return;
+        }
+
+        if (activeTicketsCollection.length === 0) {
+            alert("कृपया आगे बढ़ने के लिए कम से कम एक टिकट चुनें।");
+            return;
+        }
+
+        // Processing Message Text String Structure
+        const messageString = `*🟢 NEW KERALA LOTTERY BOOKING* %0A%0A` +
+                              `*👤 Name:* ${clientProfileName}%0A` +
+                              `*📱 Mobile:* ${clientProfilePhone}%0A%0A` +
+                              `*🎟️ Selected Tickets (${activeTicketsCollection.length}):*%0A${activeTicketsCollection.map(id => `• ${id}`).join('%0A')}%0A%0A` +
+                              `*💰 Total Price:* ₹${calculationAggregate}/-`;
+
+        // Updated Target WhatsApp API Gateway Integration
+        const coreGatewayNumber = "919709981588";
+        window.open(`https://wa.me/${coreGatewayNumber}?text=${messageString}`, '_blank');
+    }
+</script>
+
+</body>
+</html>
