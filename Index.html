@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kerala Government Lottery - Booking Form</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #fce4ec;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card-container {
+            background: white;
+            max-width: 450px;
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            padding: 15px;
+            border: 1px solid #ddd;
+        }
+
+        .image-banner {
+            width: 100%;
+            border-radius: 10px;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .heading-badge {
+            background: #f5f5f5;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 15px;
+            border: 1px solid #eee;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .ticket-section {
+            border: 2px dashed #f06292;
+            border-radius: 10px;
+            padding: 15px;
+            background-color: #fff;
+            margin-bottom: 15px;
+        }
+
+        .ticket-header {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            text-align: center;
+            padding: 8px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+        .ticket-container {
+            max-height: 250px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .ticket-item {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            color: #333;
+            padding: 8px 5px;
+            border-bottom: 1px solid #f5f5f5;
+            cursor: pointer;
+        }
+
+        .ticket-item input {
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .total-section {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            padding-left: 5px;
+        }
+
+        .submit-btn {
+            background-color: #00c853;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .submit-btn:hover {
+            background-color: #00b248;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card-container">
+    <img src="https://via.placeholder.com/400x200" alt="Banner" class="image-banner">
+
+    <div class="heading-badge">
+        🎟️ Kerala Government Lottery • Book Your Ticket
+    </div>
+
+    <form id="lotteryForm">
+        <div class="input-group">
+            <label>👤 Full Name</label>
+            <input type="text" placeholder="अपना पूरा नाम लिखें" required>
+        </div>
+
+        <div class="input-group">
+            <label>📱 Mobile Number</label>
+            <input type="tel" placeholder="अपना मोबाइल नंबर लिखें" required>
+        </div>
+
+        <div class="ticket-section">
+            <div class="ticket-header">🎟️ Select Tickets (₹40 each)</div>
+            <div class="ticket-container" id="ticketList"></div>
+        </div>
+
+        <div class="total-section" id="totalDisplay">
+            Total: ₹0
+        </div>
+
+        <button type="submit" class="submit-btn">
+            📲 Submit & Continue To WhatsApp
+        </button>
+    </form>
+</div>
+
+<script>
+    const ticketListContainer = document.getElementById('ticketList');
+    const totalDisplay = document.getElementById('totalDisplay');
+    const ticketPrice = 40;
+
+    // आपके द्वारा दिए गए खास टिकट नंबर
+    const customTickets = [
+        "KL377370", "KL946335", "KL145561", "KL865179", "KL581741", 
+        "KL662275", "KL230889", "KL496922", "KL182627", "KL678856", 
+        "KL407419", "KL969693", "KL759176", "KL748564", "KL479201",
+        "KL705397", "KL301629", "KL838797", "KL172933", "KL148050",
+        "KL793384", "KL338968", "KL910620", "KL403445", "KL183667",
+        "KL996865", "KL344098", "KL205907", "KL498591", "KL391476",
+        "KL106814", "KL895667", "KL944962", "KL267414", "KL832052",
+        "KL543143", "KL456778", "KL391369", "KL263032", "KL325772",
+        "KL900581", "KL452944", "KL207175", "KL197251", "KL498382",
+        "KL201414", "KL476417", "KL988605", "KL343962", "KL629903",
+        "KL731262", "KL127824", "KL688508", "KL308496", "KL850800",
+        "KL781453", "KL835392", "KL671412", "KL539898", "KL331148",
+        "KL571029", "KL717889", "KL391704", "KL126225", "KL877572",
+        "KL388389", "KL356787", "KL334053", "KL246316"
+    ];
+
+    let allTickets = [...customTickets];
+    
+    // बाकी बचे टिकट ऑटोमैटिक जोड़कर पूरे 200 करना
+    let startNum = 500101;
+    while(allTickets.length < 200) {
+        allTickets.push("KL" + startNum);
+        startNum++;
+    }
+
+    // टिकट स्क्रीन पर दिखाना
+    allTickets.forEach((ticket) => {
+        const label = document.createElement('label');
+        label.className = 'ticket-item';
+        
+        label.innerHTML = `
+            <input type="checkbox" value="${ticket}" onchange="updateTotal()">
+            <span>${ticket}</span>
+        `;
+        ticketListContainer.appendChild(label);
+    });
+
+    // लाइव अमाउंट कैलकुलेटर
+    function updateTotal() {
+        const checkedBoxes = document.querySelectorAll('#ticketList input[type="checkbox"]:checked');
+        const totalCost = checkedBoxes.length * ticketPrice;
+        totalDisplay.innerText = `Total: ₹${totalCost} (${checkedBoxes.length} Ticket Selected)`;
+    }
+
+    // फॉर्म सबमिट होने पर आपके व्हाट्सएप नंबर पर डेटा भेजना
+    document.getElementById('lotteryForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const name = this.querySelector('input[type="text"]').value;
+        const mobile = this.querySelector('input[type="tel"]').value;
+        
+        const checkedBoxes = document.querySelectorAll('#ticketList input[type="checkbox"]:checked');
+        let selectedTickets = [];
+        checkedBoxes.forEach(box => selectedTickets.push(box.value));
+
+        if(selectedTickets.length === 0) {
+            alert("कृपया कम से कम एक टिकट जरूर चुनें!");
+            return;
+        }
+
+        const totalCost = selectedTickets.length * ticketPrice;
+
+        // मैसेज का फॉर्मेट
+        const message = `*New Lottery Booking*\n\n` +
+                        `👤 *Name:* ${name}\n` +
+                        `📱 *Mobile:* ${mobile}\n` +
+                        `🎟️ *Tickets:* ${selectedTickets.join(', ')}\n` +
+                        `💰 *Total Amount:* ₹${totalCost}`;
+
+        // आपका व्हाट्सएप लिंक यहाँ सेट है
+        const whatsappUrl = `https://api.whatsapp.com/send?phone=918292439299&text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, '_blank');
+    });
+</script>
+
+</body>
+</html>
