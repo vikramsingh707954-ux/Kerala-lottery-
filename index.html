@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Official Kerala Lottery Online Counter</title>
+    <title>Kerala Lottery Counter</title>
     <style>
         :root {
             --primary-color: #008744;
@@ -20,11 +20,11 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
         body {
-            background-color: #f0f2f5;
+            background-color: #1a202c;
             color: var(--text-dark);
             display: flex;
             justify-content: center;
@@ -35,77 +35,133 @@
 
         .phone-container {
             width: 100%;
-            max-width: 450px;
+            max-width: 440px;
             background: #ffffff;
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
             position: relative;
         }
 
-        /* Top Banner Container - Exact Image Bound */
-        .hero-banner {
-            width: 100%;
-            height: 190px;
-            background: url('1000016014.png') no-repeat center center;
-            background-size: cover;
-            position: relative;
+        /* Official Header Styling - Updated to Kerala Lottery */
+        .gov-header {
+            background: linear-gradient(135deg, #005a2b 0%, #008744 100%);
+            padding: 16px;
+            text-align: center;
+            color: #ffffff;
+            border-bottom: 4px solid var(--border-green);
+        }
+
+        .gov-header h1 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .gov-sub-tag {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #d1fae5;
+            background: rgba(255,255,255,0.15);
+            padding: 3px 12px;
+            border-radius: 50px;
+            display: inline-block;
+        }
+
+        /* Combined Live Banner Wrapper */
+        .hero-banner-wrapper {
+            background: #ffffff;
+            padding: 12px;
             display: flex;
-            align-items: flex-end;
+            flex-direction: column;
+            gap: 10px;
+            border-bottom: 1px solid var(--card-border);
         }
 
-        .hero-banner::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.05), rgba(0,0,0,0.3));
+        /* Live Booking Alert Widget */
+        .booking-alert-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-left: 6px solid var(--primary-color);
+            border-radius: 14px;
+            padding: 10px 14px;
+            box-shadow: 0 4px 12px rgba(0, 135, 68, 0.06);
         }
 
-        /* Live Today Draw Ticker Layout - White Background Removed & Semi-Transparent Glass Effect Added */
-        .live-ticker {
-            position: absolute;
-            bottom: 12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 92%;
-            background: rgba(255, 255, 255, 0.85); /* Semi-transparent white to reveal background image clearly */
-            border-left: 5px solid var(--live-red);
-            padding: 12px 15px;
-            border-radius: 12px;
+        .ticket-icon-circle {
+            width: 36px;
+            height: 36px;
+            background-color: #e6fffa;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .booking-details-text {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .booking-user-line {
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        .booking-user-line strong {
+            color: #1a202c;
+            font-weight: 700;
+        }
+
+        .booking-stats-line {
+            font-size: 0.85rem;
+            color: #718096;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+
+        .amount-paid {
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-left: auto;
+        }
+
+        /* Live Today Draw Widget */
+        .live-draw-box {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            z-index: 2;
-            backdrop-filter: blur(4px); /* Professional look */
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-left: 6px solid var(--live-red);
+            padding: 10px 14px;
+            border-radius: 14px;
         }
 
-        .live-label-container {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        /* Tik-Tik Logo Badge */
         .live-badge {
             background: var(--live-red);
             color: white;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             font-weight: 800;
-            padding: 3px 8px;
+            padding: 3px 6px;
             border-radius: 4px;
-            letter-spacing: 0.5px;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
         }
 
-        /* Continuous Blinking Animation Effect */
         .ticker-dot {
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             background-color: #ffffff;
             border-radius: 50%;
             animation: tiktik 0.6s infinite alternate;
@@ -114,55 +170,40 @@
         .draw-title {
             font-size: 0.85rem;
             font-weight: 700;
-            color: #1a202c; /* Clear text color over background */
+            color: #1a202c;
+            margin-left: 5px;
         }
 
         .ticker-text {
             font-size: 0.9rem;
             color: #1a202c;
             font-weight: 700;
-            background: rgba(255, 245, 245, 0.9);
+            background: #fff5f5;
             padding: 4px 10px;
             border-radius: 6px;
             border: 1px solid #fed7d7;
         }
 
-        /* Status Bar Layout */
+        /* Status Bar Layout - Updated with Direct Live result */
         .status-bar {
-            background: #ffffff;
-            padding: 14px 12px;
+            background: #f8fafc;
+            padding: 10px 14px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--card-border);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 700;
-        }
-
-        /* Premium Green Text Styling for Kerala State Lottery */
-        .status-left-green { 
-            color: var(--primary-color); 
-            display: flex; 
-            align-items: center; 
-            gap: 5px;
-            font-weight: 800;
-        }
-
-        .status-right-green { 
-            color: var(--primary-color); 
-            display: flex; 
-            align-items: center; 
-            gap: 5px; 
-            font-weight: 700;
+            color: var(--primary-color);
         }
 
         /* Form Details */
         .form-body { padding: 20px; }
-        .form-group { margin-bottom: 18px; }
+        .form-group { margin-bottom: 16px; }
         
         .form-group label {
             display: block;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -174,45 +215,35 @@
         
         .input-wrapper input {
             width: 100%;
-            padding: 14px 14px 14px 40px;
+            padding: 12px 12px 12px 38px;
             border: 1.5px solid var(--card-border);
-            border-radius: 12px;
-            font-size: 1rem;
+            border-radius: 10px;
+            font-size: 0.95rem;
             outline: none;
-            transition: all 0.3s ease;
             background: var(--background-light);
         }
 
         .input-wrapper input:focus {
             border-color: var(--primary-color);
             background: #ffffff;
-            box-shadow: 0 0 0 3px rgba(0, 135, 68, 0.1);
         }
 
         .input-wrapper .icon { position: absolute; left: 14px; color: #a0aec0; }
 
-        /* Ticket Box Container with Green Dashed Border */
+        /* Ticket Box Container */
         .ticket-container {
             border: 2px dashed var(--border-green);
             background: #ffffff;
             border-radius: 14px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-
-        .ticket-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid var(--card-border);
+            padding: 14px;
+            margin-bottom: 16px;
         }
 
         .ticket-title {
-            color: var(--primary-color);
+            color: #1a202c;
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
             gap: 6px;
@@ -220,31 +251,28 @@
 
         /* Ticket Grid Box */
         .ticket-grid {
-            max-height: 260px;
+            max-height: 220px;
             overflow-y: auto;
-            padding-right: 5px;
+            padding-right: 2px;
         }
 
-        .ticket-grid::-webkit-scrollbar { width: 6px; }
-        .ticket-grid::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        .ticket-grid::-webkit-scrollbar { width: 5px; }
+        .ticket-grid::-webkit-scrollbar-track { background: #f1f1f1; }
         .ticket-grid::-webkit-scrollbar-thumb { background: #cbd5e0; border-radius: 10px; }
 
         .ticket-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 11px 12px;
+            padding: 10px 12px;
             background: var(--background-light);
             border-radius: 8px;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             cursor: pointer;
-            transition: all 0.2s;
             border: 1px solid transparent;
+            transition: all 0.2s;
         }
-
-        .ticket-item:hover { background: #edf2f7; }
         
-        /* Green selection highlight */
         .ticket-item.selected { 
             background: var(--light-green); 
             border-color: var(--primary-color); 
@@ -252,16 +280,14 @@
 
         .ticket-number {
             font-weight: 700;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             color: #1a202c;
-            letter-spacing: 0.5px;
         }
 
         .ticket-checkbox { 
-            width: 18px; 
-            height: 18px; 
+            width: 16px; 
+            height: 16px; 
             accent-color: var(--primary-color); 
-            cursor: pointer; 
         }
 
         /* Summary Area */
@@ -270,41 +296,55 @@
             justify-content: space-between;
             align-items: center;
             background: #f7fafc;
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 20px;
+            padding: 12px 14px;
+            border-radius: 10px;
+            margin-bottom: 16px;
             border: 1px solid var(--card-border);
         }
 
-        .summary-text { font-size: 0.9rem; color: #4a5568; font-weight: 600; }
-        .total-amount { font-size: 1.3rem; font-weight: 800; color: #1a202c; }
+        .summary-text { font-size: 0.85rem; color: #4a5568; font-weight: 600; }
+        .total-amount { font-size: 1.2rem; font-weight: 800; color: #1a202c; }
 
-        /* Professional Submit Button with Mini Font Design */
+        /* Submit Button */
         .btn-submit {
             width: 100%;
             background: var(--primary-color);
             color: #ffffff;
             border: none;
-            padding: 15px;
-            font-size: 0.92rem;
+            padding: 14px;
+            font-size: 0.95rem;
             font-weight: 700;
-            letter-spacing: 0.3px;
-            border-radius: 14px;
+            border-radius: 12px;
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 6px;
-            box-shadow: 0 4px 12px rgba(0, 135, 68, 0.3);
-            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 135, 68, 0.25);
         }
 
-        .btn-submit:hover { background: var(--secondary-color); transform: translateY(-1px); }
+        .btn-submit:hover { background: var(--secondary-color); }
 
-        /* Smooth Tik-Tik Blinking Keyframe */
+        /* Security Badges Footer */
+        .gov-footer-text {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #a0aec0;
+            margin-top: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
         @keyframes tiktik {
-            0% { opacity: 0.1; transform: scale(0.85); }
-            100% { opacity: 1; transform: scale(1.1); }
+            0% { opacity: 0.2; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes pulseEffect {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
@@ -312,23 +352,41 @@
 
 <div class="phone-container">
     
-    <div class="hero-banner">
+    <div class="gov-header">
+        <h1>Kerala Lottery</h1>
+        <div class="gov-sub-tag">Official Online Counter</div>
+    </div>
+    
+    <div class="hero-banner-wrapper">
         
-        <div class="live-ticker">
-            <div class="live-label-container">
+        <div class="booking-alert-box" id="live-booking-box">
+            <div class="ticket-icon-circle">🎟️</div>
+            <div class="booking-details-text">
+                <div class="booking-user-line">
+                    <strong id="user-name">Vikram</strong> se <span id="user-state" style="color: #008744; font-weight: 700;">Bihar</span>
+                </div>
+                <div class="booking-stats-line">
+                    Booked <span id="user-tickets" style="font-weight:700; margin:0 3px;">8</span> Tickets 
+                    <span class="amount-paid" id="user-payment">₹320 Paid</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="live-draw-box">
+            <div style="display: flex; align-items: center;">
                 <div class="live-badge">
                     <div class="ticker-dot"></div> LIVE
                 </div>
-                <span class="draw-title">Today's Draw:</span>
+                <span class="draw-title">Today's Result:</span>
             </div>
-            <div class="ticker-text" id="live-draw-number">KL248918</div>
+            <div class="ticker-text" id="live-draw-number">KL465321</div>
         </div>
 
     </div>
 
     <div class="status-bar">
-        <span class="status-left-green">● Kerala State Lottery</span>
-        <span class="status-right-green">● Live Ticket Online</span>
+        <span>● Online Ticket Counter</span>
+        <span>● Direct Live result</span>
     </div>
 
     <form class="form-body" id="lotteryForm" onsubmit="sendToWhatsApp(event)">
@@ -337,7 +395,7 @@
             <label for="fullName">Full Name</label>
             <div class="input-wrapper">
                 <span class="icon">👤</span>
-                <input type="text" id="fullName" placeholder="Enter your full name" required>
+                <input type="text" id="fullName" placeholder="Enter your name" required>
             </div>
         </div>
 
@@ -350,57 +408,58 @@
         </div>
 
         <div class="ticket-container">
-            <div class="ticket-header">
-                <div class="ticket-title">🎟️ Choose Live Ticket</div>
-            </div>
-            
-            <div class="ticket-grid" id="ticketGrid">
-                </div>
+            <div class="ticket-title">🎟️ Choose Live Ticket Numbers:</div>
+            <div class="ticket-grid" id="ticketGrid"></div>
         </div>
 
         <div class="summary-box">
-            <div class="summary-text">Selected: <span id="selectedCount">0</span> Ticket(s)</div>
+            <div class="summary-text">Selected: <span id="selectedCount" style="font-weight:700; color:var(--primary-color);">0</span> Ticket(s)</div>
             <div class="total-amount">Amount: ₹<span id="totalPrice">0</span></div>
         </div>
 
         <button type="submit" class="btn-submit">
-            📲 Submit & Continue To WhatsApp
+            📲 Submit & Get Tickets on WhatsApp
         </button>
+
+        <div class="gov-footer-text">
+            🛡️ Secure Server Connected
+        </div>
     </form>
 </div>
 
 <script>
     const TICKET_PRICE = 40;
-    const WHATSAPP_NUMBER = "919709981588";
+    const WHATSAPP_NUMBER = "918292439299";
 
+    // 28 States of India
+    const indiaStates = [
+        "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", 
+        "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", 
+        "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", 
+        "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", 
+        "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", 
+        "Uttar Pradesh", "Uttarakhand", "West Bengal"
+    ];
+    
+    const customerNames = ["Vikram", "Rahul", "Anand", "Suresh", "Arjun", "Rajesh", "Akhil", "Deepak", "Manoj", "Pranav", "Sanjay", "Kiran", "Hari", "Amit", "Vijay", "Rohan", "Sunil", "Ravi", "Ajay", "Vinay"];
+
+    // Fully updated ticket array with all your requested unique numbers
     const exactUserTickets = [
-        "KL248918", "KL074252", "KL949345", "KL716637", "KL332233", "KL912802",
-        "KL675249", "KL817262", "KL479530", "KL944274", "KL618322", "KL454126",
-        "KL627837", "KL161202", "KL526324", "KL614273", "KL267082", "KL222211",
-        "KL779849", "KL534444", "KL733394", "KL519242", "KL830991", "KL932334",
-        "KL357599", "KL866248", "KL539300", "KL561230", "KL253652", "KL762521",
-        "KL405610", "KL510248", "KL032315", "KL499441", "KL010365", "KL882991",
-        "KL146704", "KL379249", "KL855732", "KL799438", "KL097325", "KL282904",
-        "KL042330", "KL851045", "KL370131", "KL096330", "KL444582", "KL872625",
-        "KL975221", "KL573448", "KL847739", "KL974362", "KL226698", "KL772989",
-        "KL882847", "KL702524", "KL261028", "KL828529", "KL374445", "KL268432",
-        "KL815314", "KL710348", "KL313326", "KL774267", "KL234837", "KL201359",
-        "KL014237", "KL205362", "KL304249", "KL173379", "KL932381", "KL930420",
-        "KL986270", "KL415254", "KL872348", "KL278289", "KL619404", "KL951528",
-        "KL541200", "KL949295", "KL528281", "KL174546", "KL697242", "KL336358",
-        "KL694320", "KL951546", "KL058416", "KL951538", "KL605340", "KL256303",
-        "KL673220", "KL065265", "KL097279", "KL501462", "KL529963", "KL544630",
-        "KL000332", "KL243434", "KL115528", "KL469924", "KL659026", "KL221421",
-        "KL786923", "KL792622", "KL542621", "KL662541", "KL082741", "KL812546",
-        "KL863360", "KL843120", "KL554420", "KL063445", "KL353549", "KL782656",
-        "KL465321", "KL454521", "KL716341", "KL700207", "KL169336", "KL462322",
-        "KL055406", "KL526320", "KL725241", "KL071234", "KL816328", "KL122054",
-        "KL276281", "KL971447", "KL239449", "KL441204", "KL464444", "KL845295",
-        "KL010410", "KL064555", "KL789625", "KL324441", "KL871020"
+        "KL000001", "KL000002", "KL000003", "KL000004", "KL000005", "KL000006", "KL000007", "KL000008", "KL000009", "KL000010",
+        "KL111111", "KL222222", "KL333333", "KL444444", "KL555555", "KL666666", "KL777777", "KL888888", "KL999999", "KL123456",
+        "KL654321", "KL112233", "KL445566", "KL778899", "KL121212", "KL343434", "KL565656", "KL787878", "KL909090", "KL101010",
+        "KL202020", "KL303030", "KL404040", "KL505050", "KL606060", "KL707070", "KL808080", "KL909091", "KL919191", "KL828282",
+        "KL737373", "KL646464", "KL555000", "KL000555", "KL159753", "KL357951", "KL258258", "KL147147", "KL369369", "KL456789",
+        "KL987654", "KL741852", "KL852741", "KL963852", "KL258369", "KL147258", "KL369258", "KL951753", "KL753159", "KL888000",
+        "KL000888", "KL111000", "KL000111", "KL222000", "KL000222", "KL333000", "KL000333", "KL444000", "KL000444", "KL555111",
+        "KL666222", "KL777333", "KL888444", "KL999555", "KL123123", "KL321321", "KL456456", "KL654654", "KL789789", "KL987987",
+        "KL147369", "KL258147", "KL369258", "KL951357", "KL753951", "KL852456", "KL159357", "KL753258", "KL852369", "KL951456",
+        "KL135790", "KL246801", "KL102938", "KL564738", "KL908172", "KL817263", "KL726354", "KL635241"
     ];
 
     const ticketGrid = document.getElementById('ticketGrid');
     
+    // Generate Tickets in Grid Dynamically
     exactUserTickets.forEach(ticketStr => {
         const item = document.createElement('div');
         item.className = 'ticket-item';
@@ -426,11 +485,31 @@
         document.getElementById('totalPrice').innerText = checkboxes.length * TICKET_PRICE;
     }
 
+    // Live Auto Updates Logic
+    const bookingBox = document.getElementById('live-booking-box');
+    const nameEl = document.getElementById('user-name');
+    const stateEl = document.getElementById('user-state');
+    const ticketsEl = document.getElementById('user-tickets');
+    const paymentEl = document.getElementById('user-payment');
     const liveDrawContainer = document.getElementById('live-draw-number');
+
     setInterval(() => {
-        const randomTicket = exactUserTickets[Math.floor(Math.random() * exactUserTickets.length)];
-        liveDrawContainer.innerText = randomTicket;
-    }, 3000);
+        bookingBox.style.animation = 'none';
+        setTimeout(() => { bookingBox.style.animation = 'pulseEffect 0.5s ease-in-out'; }, 10);
+
+        const randomName = customerNames[Math.floor(Math.random() * customerNames.length)];
+        const randomState = indiaStates[Math.floor(Math.random() * indiaStates.length)];
+        const randomTicketsCount = Math.floor(Math.random() * 10) + 1; 
+        const totalPaid = randomTicketsCount * TICKET_PRICE;
+
+        nameEl.innerText = randomName;
+        stateEl.innerText = randomState;
+        ticketsEl.innerText = randomTicketsCount;
+        paymentEl.innerText = `₹${totalPaid} Paid`;
+
+        const randomTicketCode = exactUserTickets[Math.floor(Math.random() * exactUserTickets.length)];
+        liveDrawContainer.innerText = randomTicketCode;
+    }, 3500); 
 
     function sendToWhatsApp(event) {
         event.preventDefault();
@@ -458,3 +537,4 @@
 </script>
 </body>
 </html>
+ Best coding
